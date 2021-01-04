@@ -1,0 +1,14 @@
+version: '2'
+services:
+  db:
+    build: db
+    image: mcmoe/mssqldocker
+    restart: always
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Passw0rd2
+    ports:
+      - 1433:1433
+    container_name: sample1-db
+    volumes:
+      - ./docker/db/data:/var/opt/mssql
