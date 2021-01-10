@@ -5,6 +5,7 @@ import com.maestro.app.sample1.ms.messages.repositories.UserMessagesRepository;
 import com.maestro.app.utils.CommonUtils;
 import com.maestro.app.utils.auth.AuthUser;
 import com.maestro.app.utils.exceptions.EntityRecordNotFound;
+import com.maestro.app.utils.queue.QueueBroadcastMessage;
 import com.maestro.app.utils.queue.QueueUserMessage;
 import com.maestro.app.utils.types.QueueMessageState;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -98,8 +100,9 @@ public class UserMessagesService {
     /**
      * Saving a message in DB
      *
-     * @param prm The parameters with message data. It must be provided from RabbitMQ queue
+     * @param prm The parameters with message data. It should be provided from RabbitMQ queue
      */
+    @Async("threadPoolMessagesExecutor")
     @Transactional
     public void saveMessage(final QueueUserMessage prm) {
         final String code = StringUtil.isBlank(prm.getCode()) ? CommonUtils.generateGuid() : prm.getCode();
@@ -124,5 +127,16 @@ public class UserMessagesService {
 
             this.messagesRepository.saveAndFlush(evt);
         }
+    }
+
+    /**
+     * Broadcast procedure
+     *
+     * @param prm The parameters with message data. It should be provided from RabbitMQ queue
+     */
+    @Async("threadPoolMessagesExecutor")
+    @Transactional
+    public void saveMessage(final QueueBroadcastMessage prm) {
+        // Logic of the procedure
     }
 }
