@@ -14,7 +14,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -102,7 +101,6 @@ public class UserMessagesService {
      *
      * @param prm The parameters with message data. It should be provided from RabbitMQ queue
      */
-    @Async("threadPoolMessagesExecutor")
     @Transactional
     public void saveMessage(final QueueUserMessage prm) {
         final String code = StringUtil.isBlank(prm.getCode()) ? CommonUtils.generateGuid() : prm.getCode();
@@ -134,7 +132,6 @@ public class UserMessagesService {
      *
      * @param prm The parameters with message data. It should be provided from RabbitMQ queue
      */
-    @Async("threadPoolMessagesExecutor")
     @Transactional
     public void saveMessage(final QueueBroadcastMessage prm) {
         // Logic of the procedure

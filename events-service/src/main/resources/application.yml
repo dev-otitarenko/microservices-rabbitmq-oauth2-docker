@@ -37,8 +37,9 @@ spring:
     password: ${rabbitmq.psw}
     listener:
       simple:
-        concurrency: 3
-        max-concurrency: 5
+        concurrency: 1
+        max-concurrency: 100
+        prefetch: 10
     template:
       retry:
         initial-interval: 1000ms
