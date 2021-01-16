@@ -9,7 +9,6 @@ import com.maestro.app.utils.data.specifications.FilterUtils;
 import com.maestro.app.utils.queue.QueueLogPublicEvt;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,7 +38,6 @@ public class LogPublicEventsService {
      *
      * @param prm The event parameter
      */
-    @Async("threadPoolEvtExecutor")
     @Transactional
     public void savePublicEvt(final QueueLogPublicEvt prm) {
         LogPublicEvents evt = new LogPublicEvents();

@@ -38,7 +38,7 @@ spring:
     listener:
       simple:
         concurrency: 1
-        max-concurrency: 1
+        max-concurrency: 100
     template:
       retry:
         initial-interval: 1000ms

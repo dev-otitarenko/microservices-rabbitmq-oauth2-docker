@@ -9,7 +9,6 @@ import com.maestro.app.utils.data.specifications.FilterUtils;
 import com.maestro.app.utils.queue.QueueLogConnectEvt;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -40,7 +39,6 @@ public class LogConnectEventsService {
      *
      * @param prm The event parameter
      */
-    @Async("threadPoolEvtExecutor")
     @Transactional
     public void saveConnectEvt(final QueueLogConnectEvt prm) {
         LogConnectEvents evt = new LogConnectEvents();
