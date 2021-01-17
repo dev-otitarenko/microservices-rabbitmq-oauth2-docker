@@ -8,9 +8,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-/**
- * Created by O.Titarenko@iaea.org on Sep-2020.
- */
 @Slf4j
 //@ExtendWith(SpringExtension.class)
 //@SpringBootTest

@@ -22,9 +22,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by O.Titarenko@iaea.org on Sep-2020.
- */
 @Slf4j
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = EventsController.class)

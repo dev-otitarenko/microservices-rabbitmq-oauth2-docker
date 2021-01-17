@@ -18,9 +18,6 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Created by O.Titarenko@iaea.org on Sep-2020.
- */
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
