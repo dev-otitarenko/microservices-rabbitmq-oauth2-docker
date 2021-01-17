@@ -1,8 +1,13 @@
 package com.maestro.app.sample.ms.events;
 
 import com.maestro.app.sample.ms.events.utils.Constants;
+import com.maestro.app.sample.ms.events.utils.TestUtils;
+import com.maestro.app.utils.CommonUtils;
+import com.maestro.app.utils.queue.QueueLogConnectEvt;
+import com.maestro.app.utils.queue.QueueLogPrivateEvt;
 import com.maestro.app.utils.queue.QueueLogPublicEvt;
 import com.maestro.app.utils.types.QueueEventType;
+import com.maestro.app.utils.types.TypeAdmin;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -24,6 +29,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.GenericContainer;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
@@ -43,6 +50,7 @@ public class LogsServiceApplicationTest {
     @Autowired
     private RabbitListenerEndpointRegistry rabbitListenerEndpointRegistry;
 
+    private final static String IdOrg = CommonUtils.generateGuid();
 
     public static GenericContainer rabbit = new GenericContainer("rabbitmq:3-management")
             .withExposedPorts(5672, 15672);
@@ -53,40 +61,25 @@ public class LogsServiceApplicationTest {
 
     @Test
     public void testLogPublicProcessor() throws InterruptedException {
-            // push 1 message
-        QueueLogPublicEvt evt = new QueueLogPublicEvt();
-        evt.setCity("KYIV");
-        evt.setCountryCode("UA");
-        evt.setCountryName("Ukraine");
-        evt.setIp_address("999.999.999.999");
-        evt.setMode(QueueEventType.SIMPLE_MESSAGE);
-        evt.setName("EVENT#1");
-        rabbitTemplate.convertAndSend(this.eventExchange.getName(), "events.public.test", evt);
-            // push 2 message
-        evt = new QueueLogPublicEvt();
-        evt.setCity("KYIV");
-        evt.setCountryCode("UA");
-        evt.setCountryName("Ukraine");
-        evt.setIp_address("999.999.999.999");
-        evt.setMode(QueueEventType.SIMPLE_MESSAGE);
-        evt.setName("EVENT#2");
-        rabbitTemplate.convertAndSend(this.eventExchange.getName(), "events.public.test", evt);
-            // push 3 message
-        evt = new QueueLogPublicEvt();
-        evt.setCity("KYIV");
-        evt.setCountryCode("UA");
-        evt.setCountryName("Ukraine");
-        evt.setIp_address("999.999.999.999");
-        evt.setMode(QueueEventType.SIMPLE_MESSAGE);
-        evt.setName("EVENT#3");
-        rabbitTemplate.convertAndSend(this.eventExchange.getName(), "events.public.test", evt);
+            // push messages
+        final int cnt = new Random().nextInt(200);
+        for (int i = 0; i < cnt; i++) {
+            QueueLogPublicEvt evt = new QueueLogPublicEvt();
+            evt.setCity("LION");
+            evt.setCountryCode("FR");
+            evt.setCountryName("France");
+            evt.setIp_address("2.3.3." + cnt);
+            evt.setMode(QueueEventType.SIMPLE_MESSAGE);
+            evt.setName("EVENT#" + i);
+            rabbitTemplate.convertAndSend(this.eventExchange.getName(), "events.public.test", evt);
+        }
             // small timeout
         Thread.sleep(5000);
             // get information about queue
         QueueInformation _queue = amqpAdmin.getQueueInfo(Constants.QUEUE_LOGSPUBLIC_NAME);
         log.debug("Queue [{}]: {}", Constants.QUEUE_LOGSPUBLIC_NAME, _queue);
 
-        assertEquals(_queue.getMessageCount(), 3);
+        assertEquals(_queue.getMessageCount(), cnt);
 
         rabbitListenerEndpointRegistry.getListenerContainer("events-listener-public").start();
 
@@ -95,6 +88,71 @@ public class LogsServiceApplicationTest {
         rabbitListenerEndpointRegistry.getListenerContainer("events-listener-public").stop();
 
         _queue = amqpAdmin.getQueueInfo(Constants.QUEUE_LOGSPUBLIC_NAME);
+
+        assertEquals(_queue.getMessageCount(), 0);
+        assertEquals(_queue.getConsumerCount(), 0);
+    }
+
+    @Test
+    public void testLogPrivateProcessor() throws InterruptedException {
+        // push messages
+        final int cnt = new Random().nextInt(200);
+        for (int i = 0; i < cnt; i++) {
+            QueueLogPrivateEvt evt = new QueueLogPrivateEvt();
+            evt.setUser(TestUtils.queryAuthUser("User_" + String.valueOf(i), IdOrg, TypeAdmin.NONE));
+            evt.setMode(QueueEventType.SIMPLE_MESSAGE);
+            evt.setName("EVENT#" + i);
+            rabbitTemplate.convertAndSend(this.eventExchange.getName(), "events.private.test", evt);
+        }
+        // small timeout
+        Thread.sleep(5000);
+        // get information about queue
+        QueueInformation _queue = amqpAdmin.getQueueInfo(Constants.QUEUE_LOGSPRIVATE_NAME);
+        log.debug("Queue [{}]: {}", Constants.QUEUE_LOGSPRIVATE_NAME, _queue);
+
+        assertEquals(_queue.getMessageCount(), cnt);
+
+        rabbitListenerEndpointRegistry.getListenerContainer("events-listener-private").start();
+
+        Thread.sleep(5000);
+
+        rabbitListenerEndpointRegistry.getListenerContainer("events-listener-private").stop();
+
+        _queue = amqpAdmin.getQueueInfo(Constants.QUEUE_LOGSPRIVATE_NAME);
+
+        assertEquals(_queue.getMessageCount(), 0);
+        assertEquals(_queue.getConsumerCount(), 0);
+    }
+
+    @Test
+    public void testLogConnectsProcessor() throws InterruptedException {
+        // push messages
+        final int cnt = new Random().nextInt(200);
+        for (int i = 0; i < cnt; i++) {
+            QueueLogConnectEvt evt = new QueueLogConnectEvt();
+            evt.setIduser("User_" + i);
+            evt.setUsername("User #" + i);
+            evt.setCity("MUNICH");
+            evt.setCountryCode("DE");
+            evt.setCountryName("German");
+            evt.setIp_address("5.5.23." + cnt);
+            rabbitTemplate.convertAndSend(this.eventExchange.getName(), "events.connects.test", evt);
+        }
+        // small timeout
+        Thread.sleep(5000);
+        // get information about queue
+        QueueInformation _queue = amqpAdmin.getQueueInfo(Constants.QUEUE_LOGSCONNECTS_NAME);
+        log.debug("Queue [{}]: {}", Constants.QUEUE_LOGSCONNECTS_NAME, _queue);
+
+        assertEquals(_queue.getMessageCount(), cnt);
+
+        rabbitListenerEndpointRegistry.getListenerContainer("events-listener-connects").start();
+
+        Thread.sleep(5000);
+
+        rabbitListenerEndpointRegistry.getListenerContainer("events-listener-connects").stop();
+
+        _queue = amqpAdmin.getQueueInfo(Constants.QUEUE_LOGSCONNECTS_NAME);
 
         assertEquals(_queue.getMessageCount(), 0);
         assertEquals(_queue.getConsumerCount(), 0);
