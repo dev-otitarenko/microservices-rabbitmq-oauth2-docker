@@ -28,8 +28,8 @@ services:
     environment:
       JAVA_OPTS: -Xmx200M -XX:MaxRAM=256M -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
       app.telemetry.level: INFO
-      app.db.server: sample1-db
-      app.db.name: authdb
+      app.db.server: sampledb
+      app.db.name: samples
       app.db.user: sa
       app.db.psw: Passw0rd2
       rabbitmq.user: admin
@@ -51,8 +51,8 @@ services:
     environment:
       JAVA_OPTS: -Xmx200M -XX:MaxRAM=256M -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
       app.telemetry.level: INFO
-      app.db.server: sample1-db
-      app.db.name: authdb
+      app.db.server: sampledb
+      app.db.name: samples
       app.db.user: sa
       app.db.psw: Passw0rd2
       auth-server.user: adminapp
@@ -77,8 +77,8 @@ services:
     environment:
       JAVA_OPTS: -Xmx200M -XX:MaxRAM=256M -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
       app.telemetry.level: INFO
-      app.db.server: sample1-db
-      app.db.name: authdb
+      app.db.server: sampledb
+      app.db.name: samples
       app.db.user: sa
       app.db.psw: Passw0rd2
       auth-server.user: adminapp
@@ -103,10 +103,10 @@ services:
     environment:
       JAVA_OPTS: -Xmx200M -XX:MaxRAM=256M -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
       app.telemetry.level: INFO
-      app.db.server: mssqldev
-      app.db.name: auth-db
+      app.db.server: sampledb
+      app.db.name: samples
       app.db.user: sa
-      app.db.psw: YourPassword
+      app.db.psw: Passw0rd2
       auth-server.user: adminapp
       auth-server.secret: password
       auth-server.url: http://auth-service:8812
