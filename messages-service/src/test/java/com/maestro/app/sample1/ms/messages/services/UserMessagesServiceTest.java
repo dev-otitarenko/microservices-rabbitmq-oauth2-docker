@@ -96,7 +96,6 @@ class UserMessagesServiceTest {
                 evt.setIdUser(iduser);
                 evt.setTitle("Test message #" + i);
                 evt.setMessage("Message for user");
-                evt.setExecutionTime((double) 0);
                 evt.setDateRec(new Date());
                 evt.setState(1);
                 messagesRepository.save(evt);
@@ -123,7 +122,6 @@ class UserMessagesServiceTest {
             evt.setIdUser(iduser);
             evt.setTitle("Test message #" + i);
             evt.setMessage("Message for user");
-            evt.setExecutionTime((double) 0);
             evt.setDateRec(new Date());
             evt.setState(1);
             messagesRepository.save(evt);
@@ -157,8 +155,6 @@ class UserMessagesServiceTest {
         evt.setCode(code);
         evt.setTitle("Test message");
         evt.setState(QueueMessageState.FAILURE);
-        evt.setExecutionTime(0);
-
         messagesService.saveMessage(evt);
 
         UserMessages evt1 = messagesRepository.findById(code).orElse(null);

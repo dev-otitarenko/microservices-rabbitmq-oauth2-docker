@@ -109,9 +109,6 @@ public class UserMessagesService {
                         StringUtils.isEmpty(prm.getTitle()) ? "Where is my title??" : prm.getTitle(),
                         prm.getMessage(),
                         prm.getState() == null ? QueueMessageState.SUCCESS.getValue() : prm.getState().getValue(),
-                        prm.getIdDownload(),
-                        prm.getDownloadFileNm(),
-                        prm.getExecutionTime(),
                         new Date());
         if (cnt == 0) { // The message does not exist
             UserMessages evt = new UserMessages();
@@ -119,7 +116,6 @@ public class UserMessagesService {
             evt.setIdUser(prm.getUser().getId());
             evt.setTitle(prm.getTitle());
             evt.setMessage(prm.getMessage());
-            evt.setExecutionTime(prm.getExecutionTime());
             evt.setDateRec(new Date());
             evt.setState(prm.getState().getValue());
 
