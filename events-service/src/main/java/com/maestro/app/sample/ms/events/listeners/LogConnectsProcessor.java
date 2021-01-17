@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@RabbitListener(queues = Constants.QUEUE_LOGSCONNECTS_NAME)
+@RabbitListener(id = "events-listener-connects", queues = Constants.QUEUE_LOGSCONNECTS_NAME)
 public class LogConnectsProcessor {
     private final LogConnectEventsService evtService;
 
