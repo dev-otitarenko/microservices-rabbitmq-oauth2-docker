@@ -6,7 +6,7 @@ import org.springframework.http.*;
 import java.util.Base64;
 
 /**
- * Created by Meastro on Sep-2020.
+ * Created by O.Titarenko@iaea.org on Sep-2020.
  */
 public class RestTemplateUtils {
     public static AuthenticationToken getAuthentificationToken(String BASE_URL, String authUser, String authPass, TestRestTemplate template, String user, String pass) {

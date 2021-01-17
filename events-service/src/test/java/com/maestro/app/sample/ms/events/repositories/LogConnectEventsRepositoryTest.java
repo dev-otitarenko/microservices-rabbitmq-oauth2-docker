@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.StopWatch;
 
@@ -18,8 +19,9 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Created by Maestro on Sep-2020.
+ * Created by O.Titarenko@iaea.org on Sep-2020.
  */
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -82,8 +84,8 @@ public class LogConnectEventsRepositoryTest {
 
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        System.out.printf(" Page info: Count: %d, Pages: %d, Page rows size: %d%n", list.getTotalElements(), list.getTotalPages(), list.getNumberOfElements());
-        list.getContent().forEach(rdata -> {
+        System.out.println(String.format(" Page info: Count: %d, Pages: %d, Page rows size: %d", list.getTotalElements(), list.getTotalPages(), list.getNumberOfElements()));
+        list.getContent().stream().forEach(rdata -> {
             StringBuilder sb = new StringBuilder();
             sb
                 .append(" * Processing record: {")
@@ -93,6 +95,6 @@ public class LogConnectEventsRepositoryTest {
         });
         stopWatch.stop();
 
-        System.out.printf("Method %s executed within $d miliseconds.%n", "pageDocuments()", stopWatch.getTotalTimeMillis());
+        System.out.println(String.format("Method %s executed within $d miliseconds.", "pageDocuments()", stopWatch.getTotalTimeMillis()));
     }
 }

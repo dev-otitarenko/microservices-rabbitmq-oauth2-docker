@@ -9,12 +9,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 /**
- * Created by Maestro on Sep-2020.
+ * Created by O.Titarenko@iaea.org on Sep-2020.
  */
 @Slf4j
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+//@ExtendWith(SpringExtension.class)
+//@SpringBootTest
+//@AutoConfigureMockMvc
 class EventsControllerNoAdmin_IT {
 //     TestRestTemplate template;
 //     AuthenticationToken token;
