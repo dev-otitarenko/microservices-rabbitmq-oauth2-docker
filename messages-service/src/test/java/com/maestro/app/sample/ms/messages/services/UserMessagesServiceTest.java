@@ -12,6 +12,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by Maestro on 10-Oct-2020.
- */
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -61,7 +60,7 @@ class UserMessagesServiceTest {
     @Order(3)
     void deleteNoExistingMessage() {
         Throwable exception = assertThrows(EntityRecordNotFound.class, () -> {
-            AuthUser authUser = getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG", 0);
+            AuthUser authUser = getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG");
             messagesService.deleteMessage(authUser, "*");
         });
 
@@ -74,7 +73,7 @@ class UserMessagesServiceTest {
     @Order(4)
     void deleteMessageForOtherUser() {
         Throwable exception = assertThrows(EntityRecordNotFound.class, () -> {
-            AuthUser authUser = getAuthUser("*", "TEST-USER", 0, iduser, "TEST-ORG", 0);
+            AuthUser authUser = getAuthUser("*", "TEST-USER", 0, iduser, "TEST-ORG");
             messagesService.deleteMessage(authUser, code);
         });
 
@@ -103,7 +102,7 @@ class UserMessagesServiceTest {
                 ids.add(_code);
             }
 
-            AuthUser authUser = getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG", 0);
+            AuthUser authUser = getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG");
             messagesService.deleteMessages(authUser, ids);
         } catch (EntityRecordNotFound e) {
             fail("deleteMessages failed");
@@ -127,7 +126,7 @@ class UserMessagesServiceTest {
             messagesRepository.save(evt);
         }
 
-        AuthUser authUser = getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG", 0);
+        AuthUser authUser = getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG");
         messagesService.deleteAllMessages(authUser);
     }
 
@@ -136,7 +135,7 @@ class UserMessagesServiceTest {
     @Order(5)
     void deleteMessage() {
         try {
-            AuthUser authUser = getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG", 0);
+            AuthUser authUser = getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG");
             messagesService.deleteMessage(authUser, code);
 
             assertTrue(true);
@@ -151,7 +150,7 @@ class UserMessagesServiceTest {
     @Order(0)
     void saveMessage() {
         QueueUserMessage evt = new QueueUserMessage();
-        evt.setUser(getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG", 0));
+        evt.setUser(getAuthUser(iduser, "TEST-USER", 0, iduser, "TEST-ORG"));
         evt.setCode(code);
         evt.setTitle("Test message");
         evt.setState(QueueMessageState.FAILURE);
@@ -165,7 +164,7 @@ class UserMessagesServiceTest {
         assertEquals(evt1.getIdUser(), evt.getUser().getId());
     }
 
-    private AuthUser getAuthUser(String idUser, String userNm,  int typeAdmin, String idOrg, String orgNm, int orgLevel) {
+    private AuthUser getAuthUser(String idUser, String userNm,  int typeAdmin, String idOrg, String orgNm) {
         AuthUser user = new AuthUser();
         user.setId(idUser);
         user.setUsername(userNm);

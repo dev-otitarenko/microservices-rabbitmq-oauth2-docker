@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.io.IOException;
 
 /**
- * Created by OMaestro on Sep-2020.
+ * Created by O.Titarenko@iaea.org on Sep-2020.
  */
 public class ExtensionUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper()
