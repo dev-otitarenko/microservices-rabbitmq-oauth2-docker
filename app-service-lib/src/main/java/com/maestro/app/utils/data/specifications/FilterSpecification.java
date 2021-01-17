@@ -22,7 +22,7 @@ public class FilterSpecification implements Specification {
 
     @Override
     public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        List<Predicate> predicates = buildPredicates(root, criteriaQuery, criteriaBuilder);
+        final List<Predicate> predicates = buildPredicates(root, criteriaQuery, criteriaBuilder);
         return predicates.size() > 0
                 ? criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]))
                 : null;
