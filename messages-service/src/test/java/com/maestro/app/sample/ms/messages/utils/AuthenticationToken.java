@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Created by Maestro on Sep-2020.
+ * Created by O.Titarenko@iaea.org on Sep-2020.
  */
 @Data
 @NoArgsConstructor

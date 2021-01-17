@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "LOG_CONNECTS")
+@Table(name = "LOGS_CONNECTS")
 public class LogConnectEvents implements Persistable {
     @Id
     @Column(name = "id", updatable = false)

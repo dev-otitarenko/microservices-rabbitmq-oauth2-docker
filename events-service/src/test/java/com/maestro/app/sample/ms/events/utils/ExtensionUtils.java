@@ -9,9 +9,6 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
 
-/**
- * Created by Maestro on Sep-2020.
- */
 public class ExtensionUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper()
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)

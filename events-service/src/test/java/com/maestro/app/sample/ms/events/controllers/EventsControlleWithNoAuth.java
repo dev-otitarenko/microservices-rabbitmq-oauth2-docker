@@ -1,14 +1,20 @@
 package com.maestro.app.sample.ms.events.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maestro.app.sample.ms.events.services.LogConnectEventsService;
+import com.maestro.app.sample.ms.events.services.LogPrivateEventsService;
+import com.maestro.app.sample.ms.events.services.LogPublicEventsService;
+import com.maestro.app.sample.ms.events.services.auth.IAuthenticationFacade;
 import com.maestro.app.sample.ms.events.utils.ExtensionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -16,22 +22,26 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by Maestro on Sep-2020.
- */
 @Slf4j
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-class EventsControlleWithNoAuthTest {
+@WebMvcTest(value = EventsController.class)
+class EventsControlleWithNoAuth {
      @Autowired
      private MockMvc mockMvc;
+     @MockBean
+     private LogConnectEventsService logConnectsService;
+     @MockBean
+     private LogPublicEventsService logPublicEventsService;
+     @MockBean
+     private LogPrivateEventsService logPrivateEventsService;
+     @MockBean
+     private IAuthenticationFacade authService;
 
      @Test
      @DisplayName("Trying to retrieve events from users connects log")
      void findAllConnects() throws Exception {
          mockMvc.perform(
-                 MockMvcRequestBuilders.get("/connect")
+                 MockMvcRequestBuilders.get("/connects")
                          .contentType(MediaType.APPLICATION_JSON)
                          .content(ExtensionUtils.requestBody(null)))
                  .andDo(print())

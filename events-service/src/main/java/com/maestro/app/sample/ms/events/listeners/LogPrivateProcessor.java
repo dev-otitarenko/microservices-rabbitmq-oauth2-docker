@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@RabbitListener(queues = Constants.QUEUE_LOGSPRIVATE_NAME)
+@RabbitListener(id = "events-listener-private", queues = Constants.QUEUE_LOGSPRIVATE_NAME)
 public class LogPrivateProcessor {
     private final LogPrivateEventsService evtService;
 

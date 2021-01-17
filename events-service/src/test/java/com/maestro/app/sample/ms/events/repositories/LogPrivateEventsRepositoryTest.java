@@ -10,14 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.StopWatch;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Created by Maestro on Sep-2020.
- */
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -73,16 +72,14 @@ public class LogPrivateEventsRepositoryTest {
         LogPrivateEvents evt = new LogPrivateEvents();
         evt.setCode(IdEvent);
         evt.setMode(1);
-        evt.setName(CommonUtils.generateGuid());
-        evt.setDescription("TEST");
         evt.setIduser("*");
         evt.setUsername("TEST-USER");
+        evt.setName("TEST PRIVATE EVENT");
 
         logRepository.save(evt);
 
         LogPrivateEvents savedEvt = logRepository.findById(evt.getCode()).orElse(null);
         assertNotNull(savedEvt);
-        assertEquals(savedEvt.getName(), evt.getName());
         assertEquals(savedEvt.getMode(), evt.getMode());
         assertEquals(savedEvt.getIduser(), evt.getIduser());
         assertEquals(savedEvt.getUsername(), evt.getUsername());

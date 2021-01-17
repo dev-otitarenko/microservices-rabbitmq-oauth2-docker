@@ -10,6 +10,7 @@ import io.swagger.annotations.*;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = "Operators with messages")
@@ -28,14 +29,14 @@ public class MessageController {
     @ApiOperation(value = "Getting list of messages for the authenticated user", response = List.class)
     public List<UserMessages> getUserMessages() {
         AuthUser user = authService.getAuthUser();
-        return messageService.getListMessages(user.getId());
+        return user != null ? messageService.getListMessages(user.getId()) : new ArrayList<>();
     }
 
     @GetMapping(value = "/count")
     @ApiOperation(value = "Getting count of connect events in queue for the authenticated user", response = Page.class)
     public long countUserMessages() {
         AuthUser user = authService.getAuthUser();
-        return messageService.getCountMessages(user.getId());
+        return user != null ? messageService.getCountMessages(user.getId()) : 0;
     }
 
     @DeleteMapping(value = "/{id}")

@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "LOG_PUBLIC_EVENTS")
+@Table(name = "LOGS_EVENTS_PUBLIC")
 public class LogPublicEvents implements Persistable {
     @Id
     @Column(name = "id", updatable = false)
