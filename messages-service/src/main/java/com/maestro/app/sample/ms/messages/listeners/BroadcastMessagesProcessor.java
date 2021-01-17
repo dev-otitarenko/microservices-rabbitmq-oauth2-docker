@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@RabbitListener(queues = Constants.QUEUE_BROADCASTMESSAGE_NAME)
+@RabbitListener(id = "listener-broadcast-messages", queues = Constants.QUEUE_BROADCASTMESSAGE_NAME)
 public class BroadcastMessagesProcessor {
     private final UserMessagesService messageService;
 
