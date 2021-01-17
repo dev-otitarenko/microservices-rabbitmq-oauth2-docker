@@ -74,15 +74,10 @@ public class User extends BaseGuidEntity implements UserDetails {
 
 		roles.forEach(r -> {
 			authorities.add(new SimpleGrantedAuthority(r.getName()));
-			r.getPermissions().forEach(p -> {
-				authorities.add(new SimpleGrantedAuthority(p.getName()));
-			});
 		});
 
 		if (roles.size() == 0) {
-			authorities.add(new SimpleGrantedAuthority("CAN_ORG_READ"));
-			authorities.add(new SimpleGrantedAuthority("CAN_AUTH_READ"));
-			authorities.add(new SimpleGrantedAuthority("CAN_PROJECT_READ"));
+			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		}
 
 		return authorities;

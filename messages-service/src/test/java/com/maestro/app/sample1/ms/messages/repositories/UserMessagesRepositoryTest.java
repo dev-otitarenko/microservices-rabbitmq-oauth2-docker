@@ -33,7 +33,6 @@ class UserMessagesRepositoryTest {
         evt.setIdUser(iduser);
         evt.setTitle("Test message");
         evt.setMessage("Message for user");
-        evt.setExecutionTime((double) 0);
         evt.setDateRec(new Date());
         evt.setState(1);
         messagesRepository.save(evt);

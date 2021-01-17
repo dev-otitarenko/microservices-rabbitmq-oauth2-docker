@@ -18,21 +18,12 @@ public interface UserMessagesRepository extends JpaRepository<UserMessages, Stri
 
     @Modifying
     @Query(value = "UPDATE UserMessages v" +
-                        " SET v.title = :title, " +
-                                "v.message = :message," +
-                                "v.state = :state," +
-                                "v.dateRec = :dt," +
-                                "v.idDownload = :idDownload," +
-                                "v.fileName = :fname," +
-                                "v.executionTime = :time" +
+                        " SET v.title = :title, v.message = :message, v.state = :state, v.dateRec = :dt" +
                         " WHERE v.code = :code")
     int updateMessage(@Param("code") String code,
                        @Param("title") String title,
                        @Param("message") String message,
                        @Param("state") Integer state,
-                       @Param("idDownload") String idDownload,
-                       @Param("fname") String fname,
-                       @Param("time") Double execTime,
                        @Param("dt") Date dt);
 
     @Modifying

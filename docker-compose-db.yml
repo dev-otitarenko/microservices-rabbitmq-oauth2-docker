@@ -9,6 +9,6 @@ services:
       SA_PASSWORD: Passw0rd2
     ports:
       - 1433:1433
-    container_name: sample1-db
+    container_name: sampledb
     volumes:
-      - ./docker/db/data:/var/opt/mssql
+      - ./docker/samples-db/data:/var/opt/mssql

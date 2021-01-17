@@ -26,14 +26,8 @@ public class UserMessages implements Persistable {
     @Column(nullable = false)
     private String title;
     private String message;
-    @Column(name = "id_download")
-    private String idDownload;
-    @Column(name = "fname")
-    private String fileName;
     @Column(nullable = false)
     private Integer state;
-    @Column(nullable = false)
-    private Double executionTime;
 
     @PrePersist
     public void prePersist() {
@@ -41,7 +35,6 @@ public class UserMessages implements Persistable {
         if (StringUtils.isEmpty(this.title)) this.title = "Where is my title ??";
         if (StringUtils.isEmpty(this.idUser)) this.title = "N/A";
         if (state == null) this.state = 0;
-        if (executionTime == null) this.executionTime = (double)0;
 
         this.dateRec = new Date();
     }

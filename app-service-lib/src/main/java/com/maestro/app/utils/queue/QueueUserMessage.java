@@ -16,8 +16,5 @@ public class QueueUserMessage {
     private String code;
     private String title;
     private String message;
-    private double executionTime;
-    private String idDownload;
-    private String downloadFileNm;
     private QueueMessageState state;
 }
