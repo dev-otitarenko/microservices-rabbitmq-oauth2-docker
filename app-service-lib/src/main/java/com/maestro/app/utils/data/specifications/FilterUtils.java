@@ -12,8 +12,8 @@ public class FilterUtils {
     public static FilterSpecification build(String search) {
         FilterSpecification specification = new FilterSpecification();
         if (search != null) {
-            Pattern pattern = Pattern.compile("(\\w+?)(:|<>|>|>:|<|<:|!:|~:|\\^:|\\$:)(.*?),", Pattern.UNICODE_CASE | Pattern.UNICODE_CHARACTER_CLASS);
-            Matcher matcher = pattern.matcher(search + ",");
+            final Pattern pattern = Pattern.compile("(\\w+?)(:|<>|>|>:|<|<:|!:|~:|\\^:|\\$:)(.*?),", Pattern.UNICODE_CASE | Pattern.UNICODE_CHARACTER_CLASS);
+            final Matcher matcher = pattern.matcher(search + ",");
             while (matcher.find()) {
                 String val = matcher.group(3);
                 if (val == null || val.trim().isEmpty()) {
@@ -28,10 +28,10 @@ public class FilterUtils {
     public static List<SearchField> buildCriterias(String search) {
         List<SearchField> criterias = new ArrayList<>();
         if (search != null) {
-            Pattern pattern = Pattern.compile("(\\w+?)(:|<>|>|>:|<|<:|!:|~:|\\^:|\\$:)(.*?),", Pattern.UNICODE_CASE | Pattern.UNICODE_CHARACTER_CLASS);
-            Matcher matcher = pattern.matcher(search + ",");
+            final Pattern pattern = Pattern.compile("(\\w+?)(:|<>|>|>:|<|<:|!:|~:|\\^:|\\$:)(.*?),", Pattern.UNICODE_CASE | Pattern.UNICODE_CHARACTER_CLASS);
+            final Matcher matcher = pattern.matcher(search + ",");
             while (matcher.find()) {
-                String val = matcher.group(3);
+                final String val = matcher.group(3);
                 if (val == null || val.trim().isEmpty()) {
                     continue;
                 }
@@ -44,10 +44,10 @@ public class FilterUtils {
     public static Map<String, SearchField> buildMapCriterias(String search) {
         Map<String, SearchField> criterias = new HashMap<>();
         if (search != null) {
-            Pattern pattern = Pattern.compile("(\\w+?)(:|<>|>|>:|<|<:|!:|~:|\\^:|\\$:)(.*?),", Pattern.UNICODE_CASE | Pattern.UNICODE_CHARACTER_CLASS);
-            Matcher matcher = pattern.matcher(search + ",");
+            final Pattern pattern = Pattern.compile("(\\w+?)(:|<>|>|>:|<|<:|!:|~:|\\^:|\\$:)(.*?),", Pattern.UNICODE_CASE | Pattern.UNICODE_CHARACTER_CLASS);
+            final Matcher matcher = pattern.matcher(search + ",");
             while (matcher.find()) {
-                String val = matcher.group(3);
+                final String val = matcher.group(3);
                 if (val == null || val.trim().isEmpty()) {
                     continue;
                 }
@@ -65,7 +65,7 @@ public class FilterUtils {
             throw new RuntimeException("operator incompatible with field");
         }
 
-        Object valueObject = convertStringValueToObject(field.getValue(), javaType);
+        final Object valueObject = convertStringValueToObject(field.getValue(), javaType);
         switch (field.getOperation()) {
             case EQ:
                 //if (field.getValue().contains("|")) {
